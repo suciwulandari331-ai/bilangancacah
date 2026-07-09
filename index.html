@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petualangan Bilangan Cacah - Matematika Kelas 5 SD</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Fredoka & Nunito untuk UI Ramah Anak -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            kidsHeader: ['Fredoka', 'sans-serif'],
+            kidsBody: ['Nunito', 'sans-serif'],
+          },
+          colors: {
+            pastelYellow: '#FFFDF0',
+            pastelBlue: '#E6F4F8',
+            kidBlue: '#3B82F6',
+            kidGreen: '#10B981',
+            kidYellow: '#FBBF24',
+            kidRed: '#EF4444',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: radial-gradient(circle, #fbcfe8 0%, #dbeafe 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .bounce-in {
+      animation: bounceIn 0.6s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      70% { transform: scale(0.9); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .float-bubble {
+      animation: floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    /* Custom Scrollbar for cute aesthetic */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4 md:p-8 select-none">
+
+  <!-- Background decorative elements -->
+  <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full opacity-40 blur-lg float-bubble"></div>
+  <div class="absolute bottom-10 right-10 w-32 h-32 bg-pink-300 rounded-full opacity-40 blur-lg float-bubble" style="animation-delay: 1.5s;"></div>
+  <div class="absolute top-1/3 right-12 w-16 h-16 bg-blue-300 rounded-full opacity-40 blur-lg float-bubble" style="animation-delay: 0.7s;"></div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="w-full max-w-3xl bg-white rounded-3xl shadow-2xl border-4 border-yellow-300 overflow-hidden relative z-10">
+    
+    <!-- Top Decorative Border -->
+    <div class="h-4 bg-gradient-to-r from-red-400 via-yellow-400 to-green-400"></div>
+
+    <!-- SCREEN 1: LOGIN / REGISTER PLAYERS -->
+    <section id="screen-login" class="p-6 md:p-10 text-center">
+      <div class="mb-6">
+        <span class="inline-block px-4 py-2 bg-yellow-100 text-yellow-700 text-sm font-bold rounded-full mb-2 tracking-wide uppercase font-kidsHeader">Game Matematika SD Kelas 5</span>
+        <h1 class="text-3xl md:text-5xl font-kidsHeader font-bold text-blue-600 mb-2 drop-shadow">🎒 Petualangan Bilangan Cacah!</h1>
+        <p class="text-gray-600 text-base md:text-lg">Kalahkan tantangan angka hingga 100.000 bersama temanmu!</p>
+      </div>
+
+      <!-- Avatar Selection Visual Representation -->
+      <div class="flex justify-center gap-10 my-8">
+        <div class="flex flex-col items-center">
+          <div class="w-20 h-20 rounded-full bg-blue-100 border-4 border-blue-400 flex items-center justify-center text-4xl shadow-md float-bubble">
+            👦
+          </div>
+          <span class="mt-2 font-bold text-blue-600">Pemain 1</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-20 h-20 rounded-full bg-pink-100 border-4 border-pink-400 flex items-center justify-center text-4xl shadow-md float-bubble" style="animation-delay: 1s;">
+            👧
+          </div>
+          <span class="mt-2 font-bold text-pink-600">Pemain 2</span>
+        </div>
+      </div>
+
+      <!-- Form Input Nama -->
+      <div class="max-w-md mx-auto space-y-4 text-left">
+        <div>
+          <label class="block text-gray-700 font-bold mb-1 ml-1 font-kidsHeader">Nama Pemain 1 (Biru):</label>
+          <input type="text" id="input-p1" value="Kiki" maxlength="12" class="w-full px-4 py-3 rounded-2xl border-2 border-blue-200 focus:border-blue-400 focus:outline-none transition font-semibold text-gray-700 shadow-sm" placeholder="Masukkan nama...">
+        </div>
+        <div>
+          <label class="block text-gray-700 font-bold mb-1 ml-1 font-kidsHeader">Nama Pemain 2 (Merah):</label>
+          <input type="text" id="input-p2" value="Sasa" maxlength="12" class="w-full px-4 py-3 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none transition font-semibold text-gray-700 shadow-sm" placeholder="Masukkan nama...">
+        </div>
+        
+        <button onclick="startGame()" class="w-full mt-6 py-4 bg-green-500 hover:bg-green-600 text-white font-kidsHeader font-bold text-xl rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-200 active:translate-y-0">
+          Mulai Petualangan! 🚀
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: GAMEPLAY -->
+    <section id="screen-game" class="hidden p-4 md:p-8">
+      
+      <!-- SCOREBOARD & STATS HEADER -->
+      <div class="grid grid-cols-3 items-center gap-2 pb-4 mb-6 border-b-2 border-gray-100">
+        <!-- Player 1 Score -->
+        <div id="card-p1" class="p-3 bg-blue-50 border-2 border-blue-300 rounded-2xl transition duration-300 flex flex-col items-center shadow-sm">
+          <div class="flex items-center gap-1">
+            <span class="text-xl">👦</span>
+            <span id="name-p1" class="font-bold text-blue-700 text-xs md:text-sm truncate max-w-[80px]">Pemain 1</span>
+          </div>
+          <span id="score-p1" class="text-2xl md:text-3xl font-kidsHeader font-bold text-blue-600">0</span>
+        </div>
+
+        <!-- Round Indicator -->
+        <div class="text-center">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block font-kidsHeader">Ronde</span>
+          <span id="round-display" class="text-2xl md:text-3xl font-kidsHeader font-bold text-purple-600 bg-purple-100 px-4 py-1 rounded-full">1/5</span>
+        </div>
+
+        <!-- Player 2 Score -->
+        <div id="card-p2" class="p-3 bg-pink-50 border-2 border-pink-200 rounded-2xl transition duration-300 flex flex-col items-center shadow-sm">
+          <div class="flex items-center gap-1">
+            <span class="text-xl">👧</span>
+            <span id="name-p2" class="font-bold text-pink-700 text-xs md:text-sm truncate max-w-[80px]">Pemain 2</span>
+          </div>
+          <span id="score-p2" class="text-2xl md:text-3xl font-kidsHeader font-bold text-pink-600">0</span>
+        </div>
+      </div>
+
+      <!-- TURN BANNER INDICATOR -->
+      <div id="turn-banner" class="w-full py-3 px-4 mb-6 rounded-2xl text-center font-kidsHeader text-lg md:text-xl font-bold bounce-in shadow-md">
+        <!-- Dynamic via JS -->
+      </div>
+
+      <!-- QUESTION CONTAINER -->
+      <div class="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-6 md:p-8 mb-6 shadow-inner text-center">
+        <span id="question-category" class="inline-block px-3 py-1 bg-yellow-200 text-yellow-800 text-xs font-bold rounded-full mb-3 tracking-wider uppercase font-kidsHeader">Kategori Soal</span>
+        <h2 id="question-text" class="text-lg md:text-2xl font-kidsHeader text-gray-800 leading-relaxed font-semibold">
+          Loading soal menarik...
+        </h2>
+      </div>
+
+      <!-- MULTIPLE CHOICE OPTIONS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="options-container">
+        <!-- 4 Options generated dynamically -->
+        <button onclick="checkAnswer(0)" class="option-btn text-left p-4 rounded-2xl border-2 border-gray-200 hover:border-blue-400 bg-white hover:bg-blue-50 transition font-semibold text-gray-700 flex items-center shadow-sm">
+          <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mr-3 shrink-0">A</span>
+          <span class="text-sm md:text-base">Pilihan Jawaban A</span>
+        </button>
+      </div>
+
+      <!-- FEEDBACK OVERLAY SYSTEM -->
+      <div id="feedback-toast" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs transition duration-300">
+        <div class="bg-white p-6 md:p-8 rounded-3xl max-w-sm w-full mx-4 border-4 text-center shadow-2xl transform scale-95 transition-all" id="feedback-card">
+          <div id="feedback-emoji" class="text-6xl mb-4 float-bubble">🎉</div>
+          <h3 id="feedback-title" class="text-2xl font-kidsHeader font-bold mb-2">Hebat!</h3>
+          <p id="feedback-message" class="text-gray-600 mb-4 text-sm md:text-base">Jawabanmu benar sekali!</p>
+          <div id="feedback-correct-answer" class="hidden mb-4 p-3 bg-green-50 text-green-700 border-2 border-green-200 rounded-xl text-sm font-semibold"></div>
+          <span class="text-xs text-gray-400 italic">Bersiap untuk giliran berikutnya...</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SCREEN 3: END SCREEN / CELEBRATION -->
+    <section id="screen-end" class="hidden p-6 md:p-10 text-center relative">
+      <canvas id="confetti-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+      
+      <div class="relative z-10">
+        <span class="inline-block px-4 py-2 bg-purple-100 text-purple-700 text-sm font-bold rounded-full mb-3 tracking-wide uppercase font-kidsHeader">Permainan Selesai!</span>
+        <h2 class="text-3xl md:text-5xl font-kidsHeader font-bold text-blue-600 mb-6">🏆 Juara Kita Hari Ini!</h2>
+
+        <!-- WINNER CARD -->
+        <div class="bg-gradient-to-br from-yellow-50 to-amber-100 border-4 border-yellow-400 rounded-3xl p-6 md:p-8 max-w-md mx-auto mb-8 shadow-xl bounce-in">
+          <div class="text-7xl mb-4">👑</div>
+          <h3 id="winner-announcement" class="text-2xl md:text-3xl font-kidsHeader font-bold text-amber-800 mb-2">Budi Menang!</h3>
+          <p class="text-gray-600 text-sm md:text-base mb-6">Selamat atas pencapaian luar biasa kalian!</p>
+          
+          <!-- Final Scoreboard -->
+          <div class="grid grid-cols-2 gap-4 border-t border-yellow-200 pt-4">
+            <div>
+              <p class="text-xs font-bold text-gray-500 uppercase">Skor <span id="final-name-p1">Pemain 1</span></p>
+              <p id="final-score-p1" class="text-2xl font-kidsHeader font-bold text-blue-600">0</p>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-gray-500 uppercase">Skor <span id="final-name-p2">Pemain 2</span></p>
+              <p id="final-score-p2" class="text-2xl font-kidsHeader font-bold text-pink-600">0</p>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="restartGame()" class="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-kidsHeader font-bold text-xl rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-200 active:translate-y-0">
+          Bermain Lagi 🔄
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer Credit -->
+    <div class="bg-gray-50 py-3 text-center text-xs text-gray-400 border-t border-gray-100 font-semibold font-kidsBody">
+      Matematika Kelas 5 SD • Bilangan Cacah s.d. 100.000
+    </div>
+  </main>
+
+  <script>
+    // --- GAME STATE ---
+    let players = { p1: "Pemain 1", p2: "Pemain 2" };
+    let scores = { p1: 0, p2: 0 };
+    let totalRounds = 5;
+    let totalTurns = totalRounds * 2; // Each round both players take a turn
+    let currentTurnIndex = 0; // 0 to 9
+    let questionsPool = [];
+    let activeQuestion = null;
+
+    // --- INDONESIAN WORD CONVERTER FOR NUMBERS ---
+    function terbilang(angka) {
+      const kata = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
+      if (angka < 12) return kata[angka];
+      if (angka < 20) return terbilang(angka - 10) + " belas";
+      if (angka < 100) return terbilang(Math.floor(angka / 10)) + " puluh " + (angka % 10 !== 0 ? " " + terbilang(angka % 10) : "");
+      if (angka < 200) return "seratus " + terbilang(angka - 100);
+      if (angka < 1000) return terbilang(Math.floor(angka / 100)) + " ratus" + (angka % 100 !== 0 ? " " + terbilang(angka % 100) : "");
+      if (angka < 2000) return "seribu " + terbilang(angka - 1000);
+      if (angka < 100000) return terbilang(Math.floor(angka / 1000)) + " ribu" + (angka % 1000 !== 0 ? " " + terbilang(angka % 1000) : "");
+      return "";
+    }
+
+    function capitalizeFirstLetter(str) {
+      if (!str) return "";
+      const trimmed = str.replace(/\s+/g, ' ').trim();
+      return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+    }
+
+    function formatNumber(num) {
+      return num.toLocaleString('id-ID');
+    }
+
+    // --- QUESTION GENERATOR FOR DYNAMIC REPLAYABILITY ---
+    function generateMathQuestions() {
+      const questions = [];
+      
+      // Let's generate 10 highly balanced questions (5 rounds * 2 turns)
+      // Ensure we have a beautiful mix of all categories
+      const categories = [
+        'membaca', 'tempat_nilai', 'membandingkan', 'operasi',
+        'membaca', 'tempat_nilai', 'membandingkan', 'operasi',
+        'membaca', 'tempat_nilai'
+      ];
+      
+      // Shuffle the categories
+      categories.sort(() => Math.random() - 0.5);
+
+      for (let i = 0; i < totalTurns; i++) {
+        const cat = categories[i];
+        let qText = "";
+        let correctAns = "";
+        let options = [];
+        let catDisplay = "";
+
+        if (cat === 'membaca') {
+          catDisplay = "Membaca Bilangan";
+          // Generate a number like 45.203 or similar
+          const num = Math.floor(Math.random() * 98000) + 1500; // range 1.500 to 99.500
+          qText = `Nama bilangan yang tepat dari lambang bilangan <span class="font-bold text-blue-600">${formatNumber(num)}</span> adalah...`;
+          correctAns = capitalizeFirstLetter(terbilang(num));
+          
+          // Generate realistic distractors
+          const offset1 = num + (Math.random() > 0.5 ? 100 : -100);
+          const offset2 = num + (Math.random() > 0.5 ? 1000 : -1000);
+          const offset3 = num + (Math.random() > 0.5 ? 10 : -10);
+          
+          options = [
+            correctAns,
+            capitalizeFirstLetter(terbilang(Math.max(1000, offset1))),
+            capitalizeFirstLetter(terbilang(Math.max(1000, offset2))),
+            capitalizeFirstLetter(terbilang(Math.max(1000, offset3)))
+          ];
+
+        } else if (cat === 'tempat_nilai') {
+          catDisplay = "Nilai Tempat & Angka";
+          const num = Math.floor(Math.random() * 89000) + 10000; // Ensure 5-digit: 10.000 to 99.000
+          const numStr = num.toString();
+          const positions = [
+            { pos: 0, place: "puluh ribuan", valMultiplier: 10000 },
+            { pos: 1, place: "ribuan", valMultiplier: 1000 },
+            { pos: 2, place: "ratusan", valMultiplier: 100 },
+            { pos: 3, place: "puluhan", valMultiplier: 10 },
+            { pos: 4, place: "satuan", valMultiplier: 1 }
+          ];
+          
+          const chosen = positions[Math.floor(Math.random() * positions.length)];
+          const digit = numStr[chosen.pos];
+          
+          // 50% chance to ask for place value (nilai tempat) vs digit value (nilai angka)
+          if (Math.random() > 0.5) {
+            qText = `Nilai tempat dari angka <span class="font-bold text-red-500">${digit}</span> pada bilangan <span class="font-bold text-blue-600">${formatNumber(num)}</span> adalah...`;
+            correctAns = capitalizeFirstLetter(chosen.place);
+            
+            // Collect distractors from other places
+            const otherPlaces = positions.filter(p => p.place !== chosen.place).map(p => capitalizeFirstLetter(p.place));
+            options = [correctAns, otherPlaces[0], otherPlaces[1], otherPlaces[2]];
+          } else {
+            const digitVal = parseInt(digit) * chosen.valMultiplier;
+            qText = `Nilai angka dari angka <span class="font-bold text-red-500">${digit}</span> pada bilangan <span class="font-bold text-blue-600">${formatNumber(num)}</span> adalah...`;
+            correctAns = formatNumber(digitVal);
+            
+            // Generate wrong digit values
+            const wrong1 = parseInt(digit) * (chosen.valMultiplier === 10000 ? 1000 : chosen.valMultiplier * 10);
+            const wrong2 = parseInt(digit) * (chosen.valMultiplier === 1 ? 10 : chosen.valMultiplier / 10);
+            const wrong3 = (parseInt(digit) === 9 ? 8 : parseInt(digit) + 1) * chosen.valMultiplier;
+            
+            options = [
+              correctAns,
+              formatNumber(Math.max(0, wrong1)),
+              formatNumber(Math.max(0, wrong2)),
+              formatNumber(Math.max(0, wrong3))
+            ];
+          }
+
+        } else if (cat === 'membandingkan') {
+          catDisplay = "Membandingkan Bilangan";
+          const numA = Math.floor(Math.random() * 90000) + 999;
+          let numB = numA;
+          
+          // Randomly make B smaller, larger, or equal
+          const randType = Math.random();
+          if (randType < 0.45) {
+            numB = numA + (Math.floor(Math.random() * 50) + 1) * (Math.random() > 0.5 ? 10 : 100);
+          } else if (randType < 0.9) {
+            numB = numA - (Math.floor(Math.random() * 50) + 1) * (Math.random() > 0.5 ? 10 : 100);
+          }
+          
+          qText = `Isilah titik-titik berikut dengan tanda perbandingan yang benar:<br><span class="font-bold text-blue-600">${formatNumber(numA)}</span> &nbsp;...&nbsp; <span class="font-bold text-blue-600">${formatNumber(numB)}</span>`;
+          
+          if (numA < numB) {
+            correctAns = "< (Lebih kecil dari)";
+          } else if (numA > numB) {
+            correctAns = "> (Lebih besar dari)";
+          } else {
+            correctAns = "= (Sama dengan)";
+          }
+          
+          options = [
+            "< (Lebih kecil dari)",
+            "> (Lebih besar dari)",
+            "= (Sama dengan)",
+            "+ (Ditambah)"
+          ];
+
+        } else if (cat === 'operasi') {
+          catDisplay = "Penjumlahan & Pengurangan";
+          // Decide Addition or Subtraction
+          if (Math.random() > 0.5) {
+            // Addition
+            const num1 = Math.floor(Math.random() * 45000) + 1000;
+            const num2 = Math.floor(Math.random() * 45000) + 1000;
+            const result = num1 + num2;
+            qText = `Berapakah hasil penjumlahan dari <span class="font-bold text-blue-600">${formatNumber(num1)}</span> + <span class="font-bold text-blue-600">${formatNumber(num2)}</span>?`;
+            correctAns = formatNumber(result);
+            
+            options = [
+              correctAns,
+              formatNumber(result + 100),
+              formatNumber(result - 1000),
+              formatNumber(result + 10)
+            ];
+          } else {
+            // Subtraction
+            const num1 = Math.floor(Math.random() * 80000) + 15000;
+            const num2 = Math.floor(Math.random() * (num1 - 5000)) + 2000;
+            const result = num1 - num2;
+            qText = `Berapakah hasil pengurangan dari <span class="font-bold text-blue-600">${formatNumber(num1)}</span> - <span class="font-bold text-blue-600">${formatNumber(num2)}</span>?`;
+            correctAns = formatNumber(result);
+            
+            options = [
+              correctAns,
+              formatNumber(result + 1000),
+              formatNumber(result - 100),
+              formatNumber(result + 50)
+            ];
+          }
+        }
+
+        // Shuffle options and clean duplicates if any
+        options = [...new Set(options)].slice(0, 4);
+        while (options.length < 4) {
+          // Fallback distractor
+          options.push(formatNumber(Math.floor(Math.random() * 90000) + 1000));
+        }
+        options.sort(() => Math.random() - 0.5);
+
+        questions.push({
+          category: catDisplay,
+          text: qText,
+          correct: correctAns,
+          choices: options
+        });
+      }
+
+      return questions;
+    }
+
+    // --- GAME CONTROL ---
+    function startGame() {
+      const p1Input = document.getElementById('input-p1').value.trim();
+      const p2Input = document.getElementById('input-p2').value.trim();
+
+      players.p1 = p1Input || "Pemain 1";
+      players.p2 = p2Input || "Pemain 2";
+
+      // Reset states
+      scores.p1 = 0;
+      scores.p2 = 0;
+      currentTurnIndex = 0;
+
+      // Update names on scoreboard
+      document.getElementById('name-p1').innerText = players.p1;
+      document.getElementById('name-p2').innerText = players.p2;
+      document.getElementById('score-p1').innerText = "0";
+      document.getElementById('score-p2').innerText = "0";
+
+      // Generate Questions
+      questionsPool = generateMathQuestions();
+
+      // UI Transitions
+      document.getElementById('screen-login').classList.add('hidden');
+      document.getElementById('screen-game').classList.remove('hidden');
+
+      loadNextTurn();
+    }
+
+    function loadNextTurn() {
+      if (currentTurnIndex >= totalTurns) {
+        endGame();
+        return;
+      }
+
+      // Calculate Round and Player
+      const round = Math.floor(currentTurnIndex / 2) + 1;
+      const isP1 = currentTurnIndex % 2 === 0;
+      const currentPlayerKey = isP1 ? 'p1' : 'p2';
+      const currentPlayerName = players[currentPlayerKey];
+
+      // Update Header Round
+      document.getElementById('round-display').innerText = `${round}/${totalRounds}`;
+
+      // Highlight active scoreboard card
+      const cardP1 = document.getElementById('card-p1');
+      const cardP2 = document.getElementById('card-p2');
+      if (isP1) {
+        cardP1.className = "p-3 bg-blue-100 border-4 border-blue-500 rounded-2xl scale-105 transition duration-300 flex flex-col items-center shadow-md";
+        cardP2.className = "p-3 bg-gray-50 border-2 border-gray-200 rounded-2xl scale-95 opacity-60 transition duration-300 flex flex-col items-center";
+      } else {
+        cardP2.className = "p-3 bg-pink-100 border-4 border-pink-500 rounded-2xl scale-105 transition duration-300 flex flex-col items-center shadow-md";
+        cardP1.className = "p-3 bg-gray-50 border-2 border-gray-200 rounded-2xl scale-95 opacity-60 transition duration-300 flex flex-col items-center";
+      }
+
+      // Turn Banner Display
+      const banner = document.getElementById('turn-banner');
+      banner.className = `w-full py-3 px-4 mb-6 rounded-2xl text-center font-kidsHeader text-lg md:text-xl font-bold bounce-in shadow-md ${
+        isP1 ? 'bg-blue-500 text-white border-b-4 border-blue-700' : 'bg-pink-500 text-white border-b-4 border-pink-700'
+      }`;
+      banner.innerHTML = isP1 ? `⚡ Giliran <span class="underline">${currentPlayerName}</span> (Pemain 1)!` : `✨ Giliran <span class="underline">${currentPlayerName}</span> (Pemain 2)!`;
+
+      // Set Question
+      activeQuestion = questionsPool[currentTurnIndex];
+      document.getElementById('question-category').innerText = activeQuestion.category;
+      document.getElementById('question-text').innerHTML = activeQuestion.text;
+
+      // Populate Options Buttons
+      const container = document.getElementById('options-container');
+      container.innerHTML = ""; // clear old buttons
+
+      const letters = ['A', 'B', 'C', 'D'];
+      const colorSchemes = [
+        { border: 'hover:border-blue-400', badge: 'bg-blue-100 text-blue-600' },
+        { border: 'hover:border-green-400', badge: 'bg-green-100 text-green-600' },
+        { border: 'hover:border-yellow-400', badge: 'bg-yellow-100 text-yellow-600' },
+        { border: 'hover:border-pink-400', badge: 'bg-pink-100 text-pink-600' }
+      ];
+
+      activeQuestion.choices.forEach((choice, index) => {
+        const btn = document.createElement('button');
+        btn.onclick = () => checkAnswer(choice, btn);
+        btn.className = `option-btn w-full text-left p-4 rounded-2xl border-2 border-gray-200 bg-white hover:bg-slate-50 transition duration-150 font-semibold text-gray-700 flex items-center shadow-sm ${colorSchemes[index].border}`;
+        
+        btn.innerHTML = `
+          <span class="w-8 h-8 rounded-full ${colorSchemes[index].badge} font-bold flex items-center justify-center mr-3 shrink-0">${letters[index]}</span>
+          <span class="text-sm md:text-base leading-snug">${choice}</span>
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedChoice, selectedBtn) {
+      // Disable all buttons immediately to prevent multiple clicks
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach(b => b.disabled = true);
+
+      const isP1 = currentTurnIndex % 2 === 0;
+      const currentPlayerKey = isP1 ? 'p1' : 'p2';
+      const isCorrect = selectedChoice === activeQuestion.correct;
+
+      // Visual components
+      const toast = document.getElementById('feedback-toast');
+      const card = document.getElementById('feedback-card');
+      const emoji = document.getElementById('feedback-emoji');
+      const title = document.getElementById('feedback-title');
+      const msg = document.getElementById('feedback-message');
+      const correctAnsBlock = document.getElementById('feedback-correct-answer');
+
+      if (isCorrect) {
+        // Add Score
+        scores[currentPlayerKey] += 10;
+        document.getElementById(`score-${currentPlayerKey}`).innerText = scores[currentPlayerKey];
+
+        // Styling selected button as Green
+        selectedBtn.classList.remove('bg-white', 'border-gray-200');
+        selectedBtn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+
+        // Setup success popup modal
+        card.className = "bg-white p-6 md:p-8 rounded-3xl max-w-sm w-full mx-4 border-4 border-green-400 text-center shadow-2xl transform scale-100 transition-all bounce-in";
+        emoji.innerText = "⭐";
+        title.innerText = "YAY! Hebat!";
+        title.className = "text-2xl font-kidsHeader font-bold mb-2 text-green-600";
+        msg.innerText = `Jawaban ${players[currentPlayerKey]} benar! Mendapat +10 poin.`;
+        correctAnsBlock.classList.add('hidden');
+      } else {
+        // Styling selected button as Red
+        selectedBtn.classList.remove('bg-white', 'border-gray-200');
+        selectedBtn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+
+        // Find the correct button and highlight it in light green
+        buttons.forEach(b => {
+          if (b.innerText.includes(activeQuestion.correct)) {
+            b.classList.remove('bg-white', 'border-gray-200');
+            b.classList.add('bg-green-50', 'border-green-400', 'text-green-700');
+          }
+        });
+
+        // Setup error popup modal
+        card.className = "bg-white p-6 md:p-8 rounded-3xl max-w-sm w-full mx-4 border-4 border-red-400 text-center shadow-2xl transform scale-100 transition-all bounce-in";
+        emoji.innerText = "💡";
+        title.innerText = "Ayo Belajar Lagi!";
+        title.className = "text-2xl font-kidsHeader font-bold mb-2 text-red-500";
+        msg.innerText = `Jawaban ${players[currentPlayerKey]} belum tepat.`;
+        
+        correctAnsBlock.innerHTML = `Jawaban benar: <strong class="underline">${activeQuestion.correct}</strong>`;
+        correctAnsBlock.classList.remove('hidden');
+      }
+
+      // Show overlay popup
+      toast.classList.remove('hidden');
+
+      // Auto dismiss after 2.5 seconds and proceed
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        currentTurnIndex++;
+        loadNextTurn();
+      }, 2500);
+    }
+
+    // --- END GAME & CELEBRATION EFFECTS ---
+    function endGame() {
+      document.getElementById('screen-game').classList.add('hidden');
+      document.getElementById('screen-end').classList.remove('hidden');
+
+      // Update scoreboard final display names
+      document.getElementById('final-name-p1').innerText = players.p1;
+      document.getElementById('final-name-p2').innerText = players.p2;
+      document.getElementById('final-score-p1').innerText = scores.p1;
+      document.getElementById('final-score-p2').innerText = scores.p2;
+
+      const winnerAnnounce = document.getElementById('winner-announcement');
+      
+      if (scores.p1 > scores.p2) {
+        winnerAnnounce.innerHTML = `🎉 Selamat, <span class="text-blue-600 underline">${players.p1}</span> Menang! 🏆`;
+      } else if (scores.p2 > scores.p1) {
+        winnerAnnounce.innerHTML = `🎉 Selamat, <span class="text-pink-600 underline">${players.p2}</span> Menang! 🏆`;
+      } else {
+        winnerAnnounce.innerHTML = `🤝 Hasil Seri! Skor Kalian Sama Hebatnya! ⭐`;
+      }
+
+      // Fire up the lovely canvas confetti celebration
+      initConfetti();
+    }
+
+    function restartGame() {
+      // Stop confetti animation if active
+      if (confettiInterval) clearInterval(confettiInterval);
+      if (confettiAnimationId) cancelAnimationFrame(confettiAnimationId);
+      
+      document.getElementById('screen-end').classList.add('hidden');
+      document.getElementById('screen-login').classList.remove('hidden');
+    }
+
+    // --- HTML5 CANVAS CONFETTI / FIREWORKS GENERATOR ---
+    let confettiInterval = null;
+    let confettiAnimationId = null;
+    
+    function initConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Responsive canvas resizing
+      function resizeCanvas() {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const colors = ['#f43f5e', '#3b82f6', '#10b981', '#fbbf24', '#a855f7', '#ec4899'];
+      const particles = [];
+
+      class ConfettiParticle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * -canvas.height - 20;
+          this.size = Math.random() * 8 + 6;
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+          this.speedY = Math.random() * 3 + 2;
+          this.speedX = Math.random() * 2 - 1;
+          this.rotation = Math.random() * 360;
+          this.rotationSpeed = Math.random() * 4 - 2;
+        }
+
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
+          this.rotation += this.rotationSpeed;
+          
+          if (this.y > canvas.height) {
+            this.y = -20;
+            this.x = Math.random() * canvas.width;
+          }
+        }
+
+        draw() {
+          ctx.save();
+          ctx.translate(this.x + this.size / 2, this.y + this.size / 2);
+          ctx.rotate((this.rotation * Math.PI) / 180);
+          ctx.fillStyle = this.color;
+          ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+          ctx.restore();
+        }
+      }
+
+      // Initialize particles
+      for (let i = 0; i < 70; i++) {
+        particles.push(new ConfettiParticle());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        confettiAnimationId = requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+  </script>
+</body>
+</html>
